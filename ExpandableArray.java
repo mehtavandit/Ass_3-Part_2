@@ -32,15 +32,14 @@ public class ExpandableArray {
         }
     }
 
-    public void search(long key) {
+    public String getValue(long key) {
         for (int i=0; i<top; i++) {
             if (arr[i].key == key) {
-                System.out.println(arr[i].value);
-                return;
+                return arr[i].value;
             }
         }
 
-        System.out.println("Not found");
+        return "Not found";
     }
 
     private int getIndex(long key) {
@@ -58,7 +57,8 @@ public class ExpandableArray {
 
         if (index!=-1 && arr[index].key == key && index-1>=0) {
             return arr[index-1].key;
-        } else return -1;
+        } 
+        else return -1;
     }
 
     public long successor(long key) {
@@ -66,7 +66,8 @@ public class ExpandableArray {
 
         if (index!=-1 && arr[index].key == key && index+1<top) {
             return arr[index+1].key;
-        } else return -1;
+        } 
+        else return -1;
     }
 
     public int size() {
@@ -120,7 +121,7 @@ public class ExpandableArray {
         return keys;
     }
 
-    long[] sortKeys(long keys[], int l, int r) {
+    private long[] sortKeys(long keys[], int l, int r) {
         if (l < r) {
             int m = l + (r - l) / 2;
             sortKeys(keys, l, m);
@@ -131,17 +132,13 @@ public class ExpandableArray {
         return keys;
     }
 
-    public void displaySortedKeys() {
+    public long[] getSortedKeys() {
         long[] keys = new long[top];
         for (int i = 0; i < top; i++) {
             keys[i] = arr[i].key;
         }
 
-        long[] sortedKeys = sortKeys(keys, 0, keys.length-1);
-        for (int i = 0; i < sortedKeys.length; i++) {
-            System.out.print(sortedKeys[i]+" ");
-            search(sortedKeys[i]);
-        }
+        return sortKeys(keys, 0, keys.length-1);
     }
 
     public void delete(long key) {
