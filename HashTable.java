@@ -29,6 +29,23 @@ public class HashTable {
 			if (tail == null) tail = head;
 		}
 
+		long delete(long key) {
+			int hashValue = computeHashValue(key);
+
+			LinkedListNode temp = HashArr[hashValue].head;
+			while (temp.next!=null && temp.next.key != key)
+				temp = temp.next;
+
+			if (temp.next.key == key) {
+				long deletedCreationOrder = temp.next.creationOrder;
+				temp.next = temp.next.next;
+				return deletedCreationOrder;
+			} else {
+				System.out.println("Key not found");
+				return -1;
+			}
+		}
+
 		void AddAtEnd(long key, long creationOrder) {
 			LinkedListNode temp = tail;
 			tail = new LinkedListNode(key, creationOrder, null);
