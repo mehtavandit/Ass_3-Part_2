@@ -1,63 +1,83 @@
-public class EHITS {
-
-    long size;
-    long key = 00000000;
+class ElasticERL {
+    long threshold;
+    long newKey = 00000000;
     long creationOrder = 0;
-    ExpandableArray object_array = null;
-    AVLTreeHashTable object1_AvlHash = null;
-    public void SetEINThreshold (long Size) {
-        this.size = Size;
+    ExpandableArray exArray = null;
+    AVLTreeHashTable doubleAVL = null;
 
-
-        if(size<=1000){
-            object_array = new ExpandableArray((int) size);
-        }
-        else{
-            object1_AvlHash = new AVLTreeHashTable();
-        }
+    public void SetEINThreshold (long threshold) {
+        this.threshold = threshold;
+        if(threshold<=1000)
+            exArray = new ExpandableArray((int) threshold);
+        else
+            doubleAVL = new AVLTreeHashTable();
     }
 
-    public long generate(){
-        return key++;
+    public long generate() {
+        return newKey++;
     }
 
-    public void allKeys(){
-
+    public long[] allKeys() {
+        // if(threshold<=1000)
+            return exArray.getSortedKeys();
+        // else
+            // doubleAVL.predecessor(key);
     }
 
-    public void add(long key, String value){
-        if(size<=1000){
-            object_array.insert(generate(), value);
-        }
-        else{
-            object1_AvlHash.insert(generate(), value);
-        }
+    // Add with generated key
+    public void add(long key, String value) {
+        if(threshold<=1000)
+            exArray.insert(key, value);
+        else
+            doubleAVL.insert(generate(), value);
     }
 
-    public void remove(long key){
-        if(size<=1000){
-//            object_array.delete(key);
-        }
-        else{
-            object1_AvlHash.delete(key);
-        }
+    // Add with user-specified key
+    public void add(String value) {
+        if(threshold<=1000)
+            exArray.insert(generate(), value);
+        else
+            doubleAVL.insert(generate(), value);
     }
 
-    public void getValues(long key){
-        if(size<=1000){
-            object_array.search(key);
-        }
-        else{
-            object1_AvlHash.get_value(key);
-        }
-
+    public void remove(long key) {
+        if(threshold<=1000)
+            exArray.delete(key);
+        else
+            doubleAVL.delete(key);
     }
 
+    public String getValues(long key) {
+        // if(threshold<=1000)
+            return exArray.getValue(key);
+        // else
+        //     return doubleAVL.get_value(key);
+    }
+
+    public long nextKey(long key) {
+        // if(threshold<=1000)
+            return exArray.successor(key);
+        // else
+            // doubleAVL.predecessor(key);
+    }
+    
+    public long prevKey(long key) {
+        // if(threshold<=1000)
+            return exArray.predecessor(key);
+        // else
+            // doubleAVL.predecessor(key);
+    }
+
+    public long rangeKey(long key1, long key2) {
+        // if(threshold<=1000)
+            return exArray.range(key1, key2);
+        // else
+            // doubleAVL.predecessor(key);
+    }
+}
+
+public class EHITS {
     public static void main(String[] args) {
-        EHITS a = new EHITS();
-        a.SetEINThreshold(50);
-        a.add(12,"v");
+        
     }
-
-
 }
