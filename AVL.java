@@ -12,7 +12,7 @@ public class AVL {
         if(node == null){
             return;
         }
-        System.out.print(node.value+" ");
+        System.out.print(node.key+" ");
         preorder(node.left);
         preorder(node.right);
     }
@@ -40,7 +40,7 @@ public class AVL {
         System.out.print(node.value+" ");
     }
 
-    public boolean search(BinaryNode node, int value)
+    public boolean find(BinaryNode node, long key)
     {
         if(node == null){
             return false;
@@ -50,17 +50,21 @@ public class AVL {
 
         while(node!=null)
         {
-            if(value<node.value){
+            if(key<node.key){
                 node = node.left;
             }
-            else if(value>node.value){
+            else if(key>node.key){
                 node = node.right;
             }else{
                 isPresent = true;
+                System.out.println(node.value);
                 break;
             }
         }
         return isPresent;
+    }
+    public void search(long key){
+        find(root, key);
     }
 
     //get height
@@ -100,37 +104,38 @@ public class AVL {
     }
 
     //insert method
-    private BinaryNode insertNode(BinaryNode node, int value){
+    private BinaryNode insertNode(BinaryNode node, long key, String value){
         if(node == null){
             BinaryNode newNode = new BinaryNode();
+            newNode.key = key;
             newNode.value = value;
             newNode.height = 1;
             return newNode;
         }
-        else if(value<node.value){
-            node.left = insertNode(node.left, value);
+        else if(key<node.key){
+            node.left = insertNode(node.left, key, value);
         }
         else{
-            node.right = insertNode(node.right, value);
+            node.right = insertNode(node.right, key, value);
         }
 
         node.height = 1 + Math.max(getHeight(node.left), getHeight(node.right));
         int balance = getBalance(node);
 
-        if(balance>1 && value < node.left.value){ //LL
+        if(balance>1 && key < node.left.key){ //LL
             return rotateRight(node);
         }
 
-        if(balance>1 && value>node.left.value){ //LR
+        if(balance>1 && key>node.left.key){ //LR
             node.left = rotateLeft(node.left);
             return rotateRight(node);
         }
 
-        if(balance<-1 && value>node.right.value){ //RR
+        if(balance<-1 && key>node.right.key){ //RR
             return rotateLeft(node);
         }
 
-        if(balance<-1 && value<node.right.value){ //RL
+        if(balance<-1 && key<node.right.key){ //RL
             node.right = rotateRight(node.right);
             return rotateLeft(node);
         }
@@ -138,8 +143,8 @@ public class AVL {
         return node;
     }
 
-    public void insert(int value){
-        root = insertNode(root,value);
+    public void insert(long key, String value){
+        root = insertNode(root,key, value );
     }
 
     //Minimum node
@@ -151,23 +156,23 @@ public class AVL {
     }
 
     //Delete node
-    public BinaryNode deleteNode(BinaryNode node, int value){
+    public BinaryNode deleteNode(BinaryNode node, long key){
         if(node == null){
             System.out.println("Value not found in AVL Tree");
             return node;
         }
-        if(value<node.value){
-            node.left = deleteNode(node.left, value);
+        if(key<node.key){
+            node.left = deleteNode(node.left, key);
         }
-        else if(value>node.value){
-            node.right = deleteNode(node.right, value);
+        else if(key>node.key){
+            node.right = deleteNode(node.right, key);
         }
         else{
             if(node.left!=null && node.right!=null){
                 BinaryNode temp = node;
                 BinaryNode minNodeForRight = minimumNode(temp.right);
                 node.value = minNodeForRight.value;
-                node.right = deleteNode(node.right, minNodeForRight.value);
+                node.right = deleteNode(node.right, minNodeForRight.key);
             }
             else if(node.left!=null){
                 node = node.left;
@@ -201,8 +206,8 @@ public class AVL {
 
     }
 
-    public void delete(int value){
-        root = deleteNode(root,value);
+    public void delete(long key){
+        root = deleteNode(root,key);
     }
 
 }

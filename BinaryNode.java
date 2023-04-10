@@ -1,5 +1,6 @@
 public class BinaryNode {
-    int value;
+    String value;
+    long key;
     int height;
     BinaryNode left;
     BinaryNode right;
