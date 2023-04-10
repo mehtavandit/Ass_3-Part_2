@@ -124,6 +124,21 @@ public class HashTable {
 		}
 	}
 
+	public long search(long key) {
+		int hashValue = computeHashValue(key);
+
+		LinkedList.LinkedListNode temp = HashArr[hashValue].head;
+		while (temp.next!=null && temp.key != key)
+			temp = temp.next;
+
+		if (temp.key == key) {
+			return temp.creationOrder;
+		} else {
+			System.out.println("Key not found");
+			return -1;
+		}
+	}
+
 	public void showTableContents() {
 		for (int i = 0; i < HashArr.length; i++) {
       if (HashArr[i].head != null) {
