@@ -167,23 +167,4 @@ public class ExpandableArray {
 
         return counter;
     }
-
-    public static void main(String[] args) {
-        ExpandableArray ex = new ExpandableArray(3);
-        ex.insert(3, "world");
-        ex.insert(2, "Hi");
-        ex.insert(1, "Hello");
-        ex.insert(1, "Hello");
-        ex.insert(10, "Hello");
-        ex.insert(12, "Hello");
-        ex.insert(123, "Hello");
-        ex.insert(221, "Hello");
-        ex.displaySortedKeys();
-        ex.delete(4);
-        ex.displaySortedKeys();
-        System.out.println(ex.successor(0));
-
-        System.out.println("");
-        System.out.println(ex.range(1, 12));
-    }
 }
