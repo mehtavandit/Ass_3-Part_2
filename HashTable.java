@@ -1,7 +1,8 @@
 import java.util.Objects;
 
 public class HashTable {
-	class LinkedList {
+	class LinkedList
+	{
 		class LinkedListNode {
 			private long key;
       private long creationOrder;
@@ -9,7 +10,7 @@ public class HashTable {
 
 			LinkedListNode(long key, long creationOrder, LinkedListNode next) {
 				this.key = key;
-        this.creationOrder = creationOrder;
+				this.creationOrder = creationOrder;
 				this.next = next;
 			}
 		}
@@ -29,22 +30,7 @@ public class HashTable {
 			if (tail == null) tail = head;
 		}
 
-		long delete(long key) {
-			int hashValue = computeHashValue(key);
 
-			LinkedListNode temp = HashArr[hashValue].head;
-			while (temp.next!=null && temp.next.key != key)
-				temp = temp.next;
-
-			if (temp.next.key == key) {
-				long deletedCreationOrder = temp.next.creationOrder;
-				temp.next = temp.next.next;
-				return deletedCreationOrder;
-			} else {
-				System.out.println("Key not found");
-				return -1;
-			}
-		}
 
 		void AddAtEnd(long key, long creationOrder) {
 			LinkedListNode temp = tail;
@@ -118,6 +104,23 @@ public class HashTable {
 			HashArr[hashValue].AddToStart(key, creationOrder);
 		} else {
 			System.out.println("Key already exists; no addition is made");
+		}
+	}
+
+	public long delete(long key) {
+		int hashValue = computeHashValue(key);
+
+		LinkedList.LinkedListNode temp = HashArr[hashValue].head;
+		while (temp.next!=null && temp.next.key != key)
+			temp = temp.next;
+
+		if (temp.next.key == key) {
+			long deletedCreationOrder = temp.next.creationOrder;
+			temp.next = temp.next.next;
+			return deletedCreationOrder;
+		} else {
+			System.out.println("Key not found");
+			return -1;
 		}
 	}
 
