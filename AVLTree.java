@@ -2,7 +2,8 @@ public class AVLTree {
 
     public class BinaryNode {
     String value;
-    long key;
+    long baseData;
+    long storedData;
     int height;
     BinaryNode left;
     BinaryNode right;
@@ -21,12 +22,12 @@ public class AVLTree {
 
     //Preorder
 
-    public void preorder(BinaryNode node)
+    public void preorder(BinaryNode node)  //tree1.add(value, data1, data2)
     {
         if(node == null){
             return;
         }
-        System.out.print(node.key+" ");
+        System.out.print(node.baseData +" ");
         preorder(node.left);
         preorder(node.right);
     }
@@ -39,7 +40,7 @@ public class AVLTree {
             return;
         }
         inorder(node.left);
-        System.out.print(node.value+" ");
+        System.out.print(node.baseData+" ");
         inorder(node.right);
     }
 
@@ -54,31 +55,29 @@ public class AVLTree {
         System.out.print(node.value+" ");
     }
 
-    public boolean find(BinaryNode node, long key)
+    public BinaryNode find(BinaryNode node, long baseData)
     {
         if(node == null){
-            return false;
+            return null;
         }
 
         boolean isPresent = false;
 
         while(node!=null)
         {
-            if(key<node.key){
+            if(baseData<node.baseData){
                 node = node.left;
             }
-            else if(key>node.key){
+            else if(baseData>node.baseData){
                 node = node.right;
             }else{
-                isPresent = true;
-                System.out.println(node.value);
-                break;
+                return node;
             }
         }
-        return isPresent;
+        return null;
     }
-    public void search(long key){
-        find(root, key);
+    public BinaryNode search(long baseData){
+        return find(root, baseData);
     }
 
     //get height
@@ -118,47 +117,48 @@ public class AVLTree {
     }
 
     //insert method
-    private BinaryNode insertNode(BinaryNode node, long key, String value){
+    private BinaryNode insertNode(BinaryNode node,long creationOrder, long key, String value){
         if(node == null){
             BinaryNode newNode = new BinaryNode();
-            newNode.key = key;
+            newNode.storedData = key;
+            newNode.baseData = creationOrder;
             newNode.value = value;
             newNode.height = 1;
             return newNode;
         }
-        else if(key<node.key){
-            node.left = insertNode(node.left, key, value);
+        else if(creationOrder<node.baseData){
+            node.left = insertNode(node.left,creationOrder, key, value);
         }
         else{
-            node.right = insertNode(node.right, key, value);
+            node.right = insertNode(node.right,creationOrder, key, value);
         }
 
         node.height = 1 + Math.max(getHeight(node.left), getHeight(node.right));
         int balance = getBalance(node);
 
-        if(balance>1 && key < node.left.key){ //LL
+        if(balance>1 && creationOrder < node.left.baseData){ //LL
             return rotateRight(node);
         }
 
-        if(balance>1 && key>node.left.key){ //LR
+        if(balance>1 && creationOrder>node.left.baseData){ //LR
             node.left = rotateLeft(node.left);
             return rotateRight(node);
         }
 
-        if(balance<-1 && key>node.right.key){ //RR
+        if(balance<-1 && creationOrder>node.right.baseData){ //RR
             return rotateLeft(node);
         }
 
-        if(balance<-1 && key<node.right.key){ //RL
+        if(balance<-1 && creationOrder<node.right.baseData){ //RL
             node.right = rotateRight(node.right);
             return rotateLeft(node);
         }
 
         return node;
-    }
+}
 
-    public void insert(long key, String value){
-        root = insertNode(root,key, value );
+    public void insert(long creationOrder, long key, String value){
+        root = insertNode(root,creationOrder, key, value );
     }
 
     //Minimum node
@@ -170,23 +170,23 @@ public class AVLTree {
     }
 
     //Delete node
-    public BinaryNode deleteNode(BinaryNode node, long key){
+    public BinaryNode deleteNode(BinaryNode node, long baseData){
         if(node == null){
             System.out.println("Value not found in AVL Tree");
             return node;
         }
-        if(key<node.key){
-            node.left = deleteNode(node.left, key);
+        if(baseData<node.baseData){
+            node.left = deleteNode(node.left, baseData);
         }
-        else if(key>node.key){
-            node.right = deleteNode(node.right, key);
+        else if(baseData>node.baseData){
+            node.right = deleteNode(node.right, baseData);
         }
         else{
             if(node.left!=null && node.right!=null){
                 BinaryNode temp = node;
                 BinaryNode minNodeForRight = minimumNode(temp.right);
                 node.value = minNodeForRight.value;
-                node.right = deleteNode(node.right, minNodeForRight.key);
+                node.right = deleteNode(node.right, minNodeForRight.baseData);
             }
             else if(node.left!=null){
                 node = node.left;
@@ -220,8 +220,8 @@ public class AVLTree {
 
     }
 
-    public void delete(long key){
-        root = deleteNode(root,key);
+    public long delete(long baseData){
+        return deleteNode(root,baseData).baseData;
     }
 
 }
