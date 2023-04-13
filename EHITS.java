@@ -14,14 +14,15 @@ class ElasticERL {
     }
 
     public long generate() {
+
         return newKey++;
     }
 
-    public long[] allKeys() {
-        // if(threshold<=1000)
-            return exArray.getSortedKeys();
-        // else
-            // doubleAVL.predecessor(key);
+    public void allKeys() {
+         if(threshold<=1000)
+            exArray.getSortedKeys();
+         else
+             doubleAVL.preorder();
     }
 
     // Add with generated key
@@ -29,7 +30,7 @@ class ElasticERL {
         if(threshold<=1000)
             exArray.insert(key, value);
         else
-            doubleAVL.insert(generate(), value);
+            doubleAVL.insert(key, value);
     }
 
     // Add with user-specified key
@@ -47,20 +48,20 @@ class ElasticERL {
             doubleAVL.delete(key);
     }
 
-    public String getValues(long key) {
-        // if(threshold<=1000)
-            return exArray.getValue(key);
-        // else
-        //     return doubleAVL.get_value(key);
+    public void getValues(long key) {
+         if(threshold<=1000)
+            exArray.getValue(key);
+         else
+             doubleAVL.get_value(key);
     }
 
-    public long nextKey(long key) {
+//    public long nextKey(long key) {
         // if(threshold<=1000)
-            return exArray.successor(key);
+//            return exArray.successor(key);
         // else
-            // doubleAVL.predecessor(key);
-    }
-    
+//             doubleAVL.succesor(key);
+//    }
+
     public long prevKey(long key) {
         // if(threshold<=1000)
             return exArray.predecessor(key);
@@ -68,16 +69,42 @@ class ElasticERL {
             // doubleAVL.predecessor(key);
     }
 
-    public long rangeKey(long key1, long key2) {
+    public void rangeKey(long key1, long key2) {
         // if(threshold<=1000)
-            return exArray.range(key1, key2);
-        // else
-            // doubleAVL.predecessor(key);
+//            return exArray.range(key1, key2);
+//         else
+             doubleAVL.range(key1, key2);
     }
 }
 
 public class EHITS {
     public static void main(String[] args) {
-        
+        ElasticERL a = new ElasticERL();
+        a.SetEINThreshold(1500);
+        a.add("a");
+//        a.add(10, "z");
+        a.add("b");
+        a.add("c");
+        a.add("d");
+        a.add("e");
+        a.add("f");
+        a.add("g");
+        a.add("h");
+        a.add("i");
+        a.add("i");
+        a.add("j");
+        a.add("k");
+        a.add("l");
+
+        a.allKeys();
+        System.out.println();
+//        System.out.println();
+//        a.getValues(22);
+//        a.remove(7);
+//        a.allKeys();
+        a.rangeKey(1,10);
+
+
+
     }
 }

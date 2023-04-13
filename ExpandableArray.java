@@ -8,7 +8,7 @@ public class ExpandableArray {
             this.value = value;
         }
     }
-    
+
     private Node[] arr;
     int top = 0;
 
@@ -23,7 +23,7 @@ public class ExpandableArray {
     public void insert(long key, String value) {
         if (top == arr.length)
             expand();
-        
+
         if (getIndex(key) == -1) {
             arr[top] = new Node(key, value);
             top++;
@@ -57,7 +57,7 @@ public class ExpandableArray {
 
         if (index!=-1 && arr[index].key == key && index-1>=0) {
             return arr[index-1].key;
-        } 
+        }
         else return -1;
     }
 
@@ -66,7 +66,7 @@ public class ExpandableArray {
 
         if (index!=-1 && arr[index].key == key && index+1<top) {
             return arr[index+1].key;
-        } 
+        }
         else return -1;
     }
 
@@ -83,17 +83,17 @@ public class ExpandableArray {
     private long[] merge(long[] keys, int l, int m, int r) {
         int n1 = m - l + 1;
         int n2 = r - m;
- 
+
         long L[] = new long[n1];
         long R[] = new long[n2];
- 
+
         for (int i = 0; i < n1; ++i)
             L[i] = keys[l + i];
         for (int j = 0; j < n2; ++j)
             R[j] = keys[m + 1 + j];
- 
+
         int i = 0, j = 0;
- 
+
         int k = l;
         while (i < n1 && j < n2) {
             if (L[i] <= R[j]) {
@@ -106,13 +106,13 @@ public class ExpandableArray {
             }
             k++;
         }
- 
+
         while (i < n1) {
             keys[k] = L[i];
             i++;
             k++;
         }
- 
+
         while (j < n2) {
             keys[k] = R[j];
             j++;
@@ -156,7 +156,7 @@ public class ExpandableArray {
 
     public int range(long key1, long key2) {
         int counter = 0;
-        
+
         for (int i = 0; i < top; i++) {
             if (arr[i].key > key1 && arr[i].key < key2)
                 counter++;

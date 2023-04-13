@@ -1,17 +1,21 @@
+import java.util.LinkedList;
+import java.util.Queue;
+
 public class AVLTree {
 
     public class BinaryNode {
-    String value;
-    long baseData;
-    long storedData;
-    int height;
-    BinaryNode left;
-    BinaryNode right;
+        String value;
+        long baseData=-1;
+        long storedData=-1;
+        int height;
+        BinaryNode left;
+        BinaryNode right;
 
-    BinaryNode() {
-        this.height = 0;
+        BinaryNode() {
+            this.height = 0;
+        }
+
     }
-}
 
 
     BinaryNode root;
@@ -22,12 +26,12 @@ public class AVLTree {
 
     //Preorder
 
-    public void preorder(BinaryNode node)  //tree1.add(value, data1, data2)
+    public void preorder(BinaryNode node)
     {
         if(node == null){
             return;
         }
-        System.out.print(node.baseData +" ");
+        System.out.print(node.baseData+" ");
         preorder(node.left);
         preorder(node.right);
     }
@@ -36,6 +40,7 @@ public class AVLTree {
 
     public void inorder(BinaryNode node)
     {
+
         if(node == null){
             return;
         }
@@ -43,7 +48,20 @@ public class AVLTree {
         System.out.print(node.baseData+" ");
         inorder(node.right);
     }
-
+    public long range_keys(BinaryNode node, long key1,long key2){
+        if(node == null){
+            return 0;
+        }
+        if(node.baseData<=key2 && node.baseData>=key1){
+            return 1 + range_keys(node.left, key1, key2)+range_keys(node.right, key1,key2);
+        }
+        else if(node.baseData<key1){
+            return range_keys(node.right, key1, key2);
+        }
+        else{
+            return range_keys(node.left, key1, key2);
+        }
+    }
     //Preorder
 
     public void postorder(BinaryNode node){
@@ -55,7 +73,7 @@ public class AVLTree {
         System.out.print(node.value+" ");
     }
 
-    public BinaryNode find(BinaryNode node, long baseData)
+    public BinaryNode search(BinaryNode node, long baseData)
     {
         if(node == null){
             return null;
@@ -75,9 +93,6 @@ public class AVLTree {
             }
         }
         return null;
-    }
-    public BinaryNode search(long baseData){
-        return find(root, baseData);
     }
 
     //get height
@@ -117,53 +132,53 @@ public class AVLTree {
     }
 
     //insert method
-    private BinaryNode insertNode(BinaryNode node,long creationOrder, long key, String value){
+    private BinaryNode insertNode(BinaryNode node,long baseData, long storedData, String value){
         if(node == null){
             BinaryNode newNode = new BinaryNode();
-            newNode.storedData = key;
-            newNode.baseData = creationOrder;
+            newNode.baseData = baseData;
+            newNode.storedData = storedData;
             newNode.value = value;
             newNode.height = 1;
             return newNode;
         }
-        else if(creationOrder<node.baseData){
-            node.left = insertNode(node.left,creationOrder, key, value);
+        else if(baseData<node.baseData){
+            node.left = insertNode(node.left, baseData, storedData, value);
         }
         else{
-            node.right = insertNode(node.right,creationOrder, key, value);
+            node.right = insertNode(node.right, baseData, storedData, value);
         }
 
         node.height = 1 + Math.max(getHeight(node.left), getHeight(node.right));
         int balance = getBalance(node);
 
-        if(balance>1 && creationOrder < node.left.baseData){ //LL
+        if(balance>1 && baseData < node.left.baseData){ //LL
             return rotateRight(node);
         }
 
-        if(balance>1 && creationOrder>node.left.baseData){ //LR
+        if(balance>1 && baseData>node.left.baseData){ //LR
             node.left = rotateLeft(node.left);
             return rotateRight(node);
         }
 
-        if(balance<-1 && creationOrder>node.right.baseData){ //RR
+        if(balance<-1 && baseData>node.right.baseData){ //RR
             return rotateLeft(node);
         }
 
-        if(balance<-1 && creationOrder<node.right.baseData){ //RL
+        if(balance<-1 && baseData<node.right.baseData){ //RL
             node.right = rotateRight(node.right);
             return rotateLeft(node);
         }
 
         return node;
-}
+    }
 
-    public void insert(long creationOrder, long key, String value){
-        root = insertNode(root,creationOrder, key, value );
+    public void insert(long baseData, long storedData, String value){
+        root = insertNode(root,baseData, storedData,value);
     }
 
     //Minimum node
     public static BinaryNode minimumNode(BinaryNode node){
-        if(node.left!=null){
+        if(node.left==null){
             return node;
         }
         return minimumNode(node.left);
@@ -171,6 +186,7 @@ public class AVLTree {
 
     //Delete node
     public BinaryNode deleteNode(BinaryNode node, long baseData){
+
         if(node == null){
             System.out.println("Value not found in AVL Tree");
             return node;
@@ -186,6 +202,8 @@ public class AVLTree {
                 BinaryNode temp = node;
                 BinaryNode minNodeForRight = minimumNode(temp.right);
                 node.value = minNodeForRight.value;
+                node.baseData = minNodeForRight.baseData;
+                node.storedData = minNodeForRight.storedData;
                 node.right = deleteNode(node.right, minNodeForRight.baseData);
             }
             else if(node.left!=null){
@@ -220,8 +238,60 @@ public class AVLTree {
 
     }
 
-    public long delete(long baseData){
-        return deleteNode(root,baseData).baseData;
+    public void delete(long baseData){
+        root = deleteNode(root,baseData);
+//        System.out.println(root.value+"z");
+    }
+
+//    void levelOrder()
+//    {
+//        Queue<BinaryNode> queue = new LinkedList<BinaryNode>();
+//        queue.add(root);
+//        while(!queue.isEmpty()){
+//            BinaryNode presentNode = queue.remove();
+//
+//            if (presentNode.value == -1) {
+//                System.out.println("");
+//            } else {
+//                System.out.print(presentNode.value+" ");
+//            }
+//
+//
+//            if (presentNode.right!=null || presentNode.left!=null) {
+//                BinaryNode levelEnd = new BinaryNode();
+//                levelEnd.value = -1;
+//                queue.add(levelEnd);
+//                if(presentNode.left!=null){
+//                    queue.add(presentNode.left);
+//                }
+//                if(presentNode.right!=null){
+//                    queue.add(presentNode.right);
+//                }
+//            }
+//        }
+//    }
+
+//    public long delete__(BinaryNode node, long baseData){
+//        long x = search(node, baseData);
+//        return x;
+//    }
+
+    public static void main(String[] args) {
+        AVLTree tree = new AVLTree();
+        tree.insert(110, 210, "a");
+        tree.insert(111, 210, "b");
+        tree.insert(112, 210, "c");
+        tree.insert(113, 210, "d");
+
+//        tree.inorder(tree.root);
+//        System.out.println();
+//        System.out.println(tree.search(tree.root, 110));
+//
+//        tree.delete(110);
+//
+//        tree.inorder(tree.root);
+//        System.out.println(tree.delete__(tree.root, 110));
+
     }
 
 }
