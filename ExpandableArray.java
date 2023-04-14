@@ -52,22 +52,22 @@ public class ExpandableArray {
         return -1;
     }
 
-    public long predecessor(long key) {
+    public void predecessor(long key) {
         int index=getIndex(key);
 
         if (index!=-1 && arr[index].key == key && index-1>=0) {
-            return arr[index-1].key;
+            System.out.println(arr[index-1].key);
         }
-        else return -1;
+        else System.out.println(-1);
     }
 
-    public long successor(long key) {
+    public void successor(long key) {
         int index=getIndex(key);
 
         if (index!=-1 && arr[index].key == key && index+1<top) {
-            return arr[index+1].key;
+            System.out.println(arr[index+1].key);
         }
-        else return -1;
+        else System.out.println(-1);
     }
 
     public int size() {
@@ -154,7 +154,7 @@ public class ExpandableArray {
         }
     }
 
-    public int range(long key1, long key2) {
+    public void range(long key1, long key2) {
         int counter = 0;
 
         for (int i = 0; i < top; i++) {
@@ -162,6 +162,6 @@ public class ExpandableArray {
                 counter++;
         }
 
-        return counter;
+        System.out.println(counter);
     }
 }
