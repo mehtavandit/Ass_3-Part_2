@@ -1,5 +1,5 @@
 public class AVLTreeHashTable {
-    static long creationOrder = 55;
+    static long creationOrder = 00000000;
 
 //    HashTable hTable;
     AVLTree creationOrder_tree;
@@ -65,9 +65,16 @@ public class AVLTreeHashTable {
         creationOrder_tree.inorder(creationOrder_tree.root);
     }
 
-    public void predecessor(long key){
-        long x = key_tree.search(key_tree.root, key).storedData;
-        x = x+1;
+    public void predecessor(long key) {
+        long x = key_tree.search(key_tree.root, key).storedData; //creation order;
+        for (long i = x - 1; i > 0; i--) {
+            AVLTree.BinaryNode y = creationOrder_tree.search(creationOrder_tree.root, i);
+            if (y != null) {
+                System.out.println("The previous key is " + y.storedData);
+                return;
+            }
+        }
+        System.out.println("No previous key found");
     }
 
     public void range(long key1, long key2){
@@ -77,6 +84,17 @@ public class AVLTreeHashTable {
 
     public void successor(long key){
         long x = key_tree.search(key_tree.root, key).storedData; //creation order
+        for(long i = x+1; i<creationOrder;i++){
+            AVLTree.BinaryNode y = creationOrder_tree.search(creationOrder_tree.root, i);
+            if(y!=null){
+                System.out.println("The next key is "+y.storedData);
+                return;
+            }
+
+
+
+        }
+        System.out.println("No Next key found");
 
     }
 

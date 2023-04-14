@@ -1,6 +1,9 @@
+import java.util.ArrayList;
+
 class ElasticERL {
     long threshold;
     long newKey = 00000000;
+    long elements_inserted = 0;
     long creationOrder = 0;
     ExpandableArray exArray = null;
     AVLTreeHashTable doubleAVL = null;
@@ -27,10 +30,17 @@ class ElasticERL {
 
     // Add with generated key
     public void add(long key, String value) {
-        if(threshold<=1000)
-            exArray.insert(key, value);
-        else
-            doubleAVL.insert(key, value);
+        if(elements_inserted<threshold){
+            if(threshold<=1000)
+                exArray.insert(key, value);
+            else
+                doubleAVL.insert(key, value);
+            elements_inserted++;
+        }
+        else{
+            System.out.println("You cannot enter more elements");
+        }
+
     }
 
     // Add with user-specified key
@@ -55,18 +65,18 @@ class ElasticERL {
              doubleAVL.get_value(key);
     }
 
-//    public long nextKey(long key) {
-        // if(threshold<=1000)
+    public void nextKey(long key) {
+//         if(threshold<=1000)
 //            return exArray.successor(key);
         // else
-//             doubleAVL.succesor(key);
-//    }
+             doubleAVL.successor(key);
+    }
 
-    public long prevKey(long key) {
+    public void prevKey(long key) {
         // if(threshold<=1000)
-            return exArray.predecessor(key);
+//            return exArray.predecessor(key);
         // else
-            // doubleAVL.predecessor(key);
+             doubleAVL.predecessor(key);
     }
 
     public void rangeKey(long key1, long key2) {
@@ -80,29 +90,45 @@ class ElasticERL {
 public class EHITS {
     public static void main(String[] args) {
         ElasticERL a = new ElasticERL();
-        a.SetEINThreshold(1500);
-        a.add("a");
-//        a.add(10, "z");
-        a.add("b");
-        a.add("c");
-        a.add("d");
-        a.add("e");
-        a.add("f");
-        a.add("g");
-        a.add("h");
-        a.add("i");
-        a.add("i");
-        a.add("j");
-        a.add("k");
-        a.add("l");
+        a.SetEINThreshold(800000000);
+       ArrayList data= Utils.getArrayFromFile("C:\\Users\\HP\\Desktop\\PPS\\Assignment 3 Part 2\\Ass_3-Part_2\\EHITS_test_files\\EHITS_test_file1.txt");
+       Long data_[] = (Long[]) data.toArray(new Long[0]);
+       System.out.println(data_[0]);
+       for(int i=0; i<50; i++){
+           a.add(data_[i], "a");
+       }
+       a.allKeys();
+       a.remove(332885);
 
+       a.add(1,"b");
         a.allKeys();
-        System.out.println();
-//        System.out.println();
-//        a.getValues(22);
-//        a.remove(7);
+//        a.add("a");
+////        a.add(10, "z");
+//        a.add("b");
+//        a.add("c");
+//        a.add("d");
+//        a.add("e");
+//        a.add("f");
+//        a.add("g");
+//        a.add("h");
+//        a.add("i");
+//        a.add("i");
+//        a.add("j");
+//        a.add("k");
+//        a.add("l");
+//
 //        a.allKeys();
-        a.rangeKey(1,10);
+//        System.out.println();
+////        System.out.println();
+////        a.getValues(22);
+//        a.remove(10);
+//        a.remove(8);
+//        a.allKeys();
+////        a.rangeKey(3,8);
+//        System.out.println();
+////        a.nextKey(9);
+//        System.out.println();
+//        a.nextKey(12);
 
 
 
