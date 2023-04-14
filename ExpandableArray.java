@@ -32,14 +32,14 @@ public class ExpandableArray {
         }
     }
 
-    public String getValue(long key) {
+    public void getValue(long key) {
         for (int i=0; i<top; i++) {
             if (arr[i].key == key) {
-                return arr[i].value;
+                System.out.print(arr[i].value);
             }
         }
 
-        return "Not found";
+        System.out.print("Not found");
     }
 
     private int getIndex(long key) {
@@ -132,13 +132,17 @@ public class ExpandableArray {
         return keys;
     }
 
-    public long[] getSortedKeys() {
+    public void getSortedKeys() {
         long[] keys = new long[top];
         for (int i = 0; i < top; i++) {
             keys[i] = arr[i].key;
         }
 
-        return sortKeys(keys, 0, keys.length-1);
+        keys = sortKeys(keys, 0, keys.length-1);
+        for (int i = 0; i < keys.length; i++) {
+            System.out.print(keys[i]+" ");
+        }
+        System.out.println("");
     }
 
     public void delete(long key) {

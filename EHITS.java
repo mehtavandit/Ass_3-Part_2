@@ -66,24 +66,24 @@ class ElasticERL {
     }
 
     public void nextKey(long key) {
-//         if(threshold<=1000)
-//            return exArray.successor(key);
-        // else
-             doubleAVL.successor(key);
+        if(threshold<=1000)
+           exArray.successor(key);
+        else
+            doubleAVL.successor(key);
     }
 
     public void prevKey(long key) {
-        // if(threshold<=1000)
-//            return exArray.predecessor(key);
-        // else
+        if(threshold<=1000)
+            exArray.predecessor(key);
+        else
              doubleAVL.predecessor(key);
     }
 
     public void rangeKey(long key1, long key2) {
-        // if(threshold<=1000)
-//            return exArray.range(key1, key2);
-//         else
-             doubleAVL.range(key1, key2);
+        if(threshold<=1000)
+            exArray.range(key1, key2);
+        else
+            doubleAVL.range(key1, key2);
     }
 }
 
