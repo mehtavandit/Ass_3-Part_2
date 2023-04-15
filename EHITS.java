@@ -6,14 +6,14 @@ class ElasticERL {
     long elements_inserted = 0;
     long creationOrder = 0;
     ExpandableArray exArray = null;
-    AVLTreeHashTable doubleAVL = null;
+    DoubleAVL doubleAVL = null;
 
     public void SetEINThreshold (long threshold) {
         this.threshold = threshold;
         if(threshold<=1000)
             exArray = new ExpandableArray((int) threshold);
         else
-            doubleAVL = new AVLTreeHashTable();
+            doubleAVL = new DoubleAVL();
     }
 
     public long generate() {
@@ -38,17 +38,25 @@ class ElasticERL {
             elements_inserted++;
         }
         else{
-            System.out.println("You cannot enter more elements");
+            System.out.println("You cannot enter "+(elements_inserted+1)+" element");
+            elements_inserted++;
         }
 
     }
 
     // Add with user-specified key
     public void add(String value) {
-        if(threshold<=1000)
-            exArray.insert(generate(), value);
-        else
-            doubleAVL.insert(generate(), value);
+        if(elements_inserted<threshold){
+            if(threshold<=1000)
+                exArray.insert(generate(), value);
+            else
+                doubleAVL.insert(generate(), value);
+            elements_inserted++;
+        }
+        else{
+            System.out.println("You cannot enter "+(elements_inserted+1)+" element");
+            elements_inserted++;
+        }
     }
 
     public void remove(long key) {
@@ -90,47 +98,18 @@ class ElasticERL {
 public class EHITS {
     public static void main(String[] args) {
         ElasticERL a = new ElasticERL();
-        a.SetEINThreshold(800000000);
-       ArrayList data= Utils.getArrayFromFile("C:\\Users\\HP\\Desktop\\PPS\\Assignment 3 Part 2\\Ass_3-Part_2\\EHITS_test_files\\EHITS_test_file1.txt");
-       Long data_[] = (Long[]) data.toArray(new Long[0]);
-       System.out.println(data_[0]);
-       for(int i=0; i<50; i++){
-           a.add(data_[i], "a");
+        a.SetEINThreshold(50000);
+       Long[] data= Utils.getArrayFromFile("C:\\Users\\HP\\Desktop\\PPS\\Assignment 3 Part 2\\Ass_3-Part_2\\EHITS_test_files\\EHITS_test_file3.txt");
+       for(int i=0; i<50000; i++){ //output must show that you cannot enter more elements
+           a.add(data[i], "a");
        }
        a.allKeys();
-       a.remove(332885);
-
-       a.add(1,"b");
-        a.allKeys();
-//        a.add("a");
-////        a.add(10, "z");
-//        a.add("b");
-//        a.add("c");
-//        a.add("d");
-//        a.add("e");
-//        a.add("f");
-//        a.add("g");
-//        a.add("h");
-//        a.add("i");
-//        a.add("i");
-//        a.add("j");
-//        a.add("k");
-//        a.add("l");
-//
-//        a.allKeys();
-//        System.out.println();
-////        System.out.println();
-////        a.getValues(22);
-//        a.remove(10);
-//        a.remove(8);
-//        a.allKeys();
-////        a.rangeKey(3,8);
-//        System.out.println();
-////        a.nextKey(9);
-//        System.out.println();
-//        a.nextKey(12);
-
-
+       a.add("brand");//Will give error, as the threshold value is reached
+       a.remove(0);
+       a.getValues(84629786);
+       a.prevKey(70147980);
+       a.nextKey(70147980);
+       a.rangeKey(99851347,99876866);
 
     }
 }

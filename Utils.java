@@ -8,7 +8,7 @@ import static java.lang.Long.parseLong;
 public class Utils {
 
 
-    public static ArrayList getArrayFromFile(String path) {
+    public static Long[] getArrayFromFile(String path) {
         ArrayList array = new ArrayList<Long>();
 
         Scanner sc = null;
@@ -21,6 +21,7 @@ public class Utils {
         } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
         }
-return array;
+        Long[] data = (Long[]) array.toArray(new Long[0]);
+        return data;
     }
 }

@@ -28,7 +28,7 @@ public class ExpandableArray {
             arr[top] = new Node(key, value);
             top++;
         } else {
-            System.out.println("Key already exists");
+            System.out.println(key+" Key already exists");
         }
     }
 
@@ -36,10 +36,11 @@ public class ExpandableArray {
         for (int i=0; i<top; i++) {
             if (arr[i].key == key) {
                 System.out.print(arr[i].value);
+                return;
             }
         }
 
-        System.out.print("Not found");
+        System.out.println("No such key exists, value not found");
     }
 
     private int getIndex(long key) {
@@ -58,7 +59,7 @@ public class ExpandableArray {
         if (index!=-1 && arr[index].key == key && index-1>=0) {
             System.out.println(arr[index-1].key);
         }
-        else System.out.println(-1);
+        else System.out.println("No such key exists");
     }
 
     public void successor(long key) {
@@ -67,7 +68,7 @@ public class ExpandableArray {
         if (index!=-1 && arr[index].key == key && index+1<top) {
             System.out.println(arr[index+1].key);
         }
-        else System.out.println(-1);
+        else System.out.println("No such key exists");
     }
 
     public int size() {
