@@ -121,28 +121,5 @@ public class DoubleAVL {
 
 
     }
-
-
-
-//    public static void main(String[] args) {
-//        AVLTreeHashTable tree = new AVLTreeHashTable();
-//        tree.insert(110, "a");
-//        tree.insert(111, "b");
-//        tree.insert(109, "c");
-//        tree.insert(112, "d");
-//        tree.insert(113, "e");
-//        tree.insert(114, "f");
-//        tree.insert(115, "e");
-//
-////        tree.preorder();
-////        System.out.println();
-////
-//        tree.allKeys();
-////        tree.delete(114);
-////        System.out.println();
-////        tree.allKeys();
-//
-//
-//
-    }
+}
 
