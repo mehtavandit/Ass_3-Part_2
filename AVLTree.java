@@ -1,6 +1,3 @@
-import java.util.LinkedList;
-import java.util.Queue;
-
 public class AVLTree {
 
     public class BinaryNode {
@@ -20,24 +17,18 @@ public class AVLTree {
 
     BinaryNode root;
 
+    /**
+     * Initializes root to null.
+     */
     public AVLTree(){
         root = null;
     }
 
-    //Preorder
 
-    public void preorder(BinaryNode node)
-    {
-        if(node == null){
-            return;
-        }
-        System.out.print(node.baseData+" ");
-        preorder(node.left);
-        preorder(node.right);
-    }
-
-    //Inorder
-
+    /**
+     * @param node
+     * Prints the inorder traversal.
+     */
     public void inorder(BinaryNode node)
     {
 
@@ -48,6 +39,14 @@ public class AVLTree {
         System.out.print(node.baseData+" ");
         inorder(node.right);
     }
+
+    /**
+     * @param node
+     * @param key1
+     * @param key2
+     * Gives the number of keys present between key1 and key2.
+     * @return
+     */
     public long range_keys(BinaryNode node, long key1,long key2){
         if(node == null){
             return 0;
@@ -62,17 +61,13 @@ public class AVLTree {
             return range_keys(node.left, key1, key2);
         }
     }
-    //Preorder
 
-    public void postorder(BinaryNode node){
-        if(node == null){
-            return;
-        }
-        postorder(node.left);
-        postorder(node.right);
-        System.out.print(node.value+" ");
-    }
-
+    /**
+     * @param node
+     * @param baseData
+     * Searches the tree for the given baseData.
+     * @return
+     */
     public BinaryNode search(BinaryNode node, long baseData)
     {
         if(node == null){
@@ -95,6 +90,11 @@ public class AVLTree {
         return null;
     }
 
+    /**
+     * @param node
+     * Gives the height of a node.
+     * @return
+     */
     //get height
     public int getHeight(BinaryNode node){
         if(node == null){
@@ -103,6 +103,11 @@ public class AVLTree {
         return node.height;
     }
 
+    /**
+     * @param disbalancednode
+     * Performs right rotation, and increases the height of disbalancednode by 1.
+     * @return
+     */
     // rotate right
     private BinaryNode rotateRight(BinaryNode disbalancednode){
         BinaryNode newRoot = disbalancednode.left;
@@ -113,6 +118,11 @@ public class AVLTree {
         return newRoot;
     }
 
+    /**
+     * @param disbalancednode
+     * Performs left rotation, and increases the height of disbalancednode by 1.
+     * @return
+     */
     // rotate left
     private BinaryNode rotateLeft(BinaryNode disbalancednode){
         BinaryNode newRoot = disbalancednode.right;
@@ -123,6 +133,11 @@ public class AVLTree {
         return newRoot;
     }
 
+    /**
+     * @param node
+     * Gives the difference of height between left subtree, and right subtree.
+     * @return
+     */
     //getBalance
     public int getBalance(BinaryNode node){
         if(node == null){
@@ -131,6 +146,14 @@ public class AVLTree {
         return getHeight(node.left) - getHeight(node.right);
     }
 
+    /**
+     * @param node
+     * @param baseData
+     * @param storedData
+     * @param value
+     * Inserts a key in a tree.
+     * @return
+     */
     //insert method
     private BinaryNode insertNode(BinaryNode node,long baseData, long storedData, String value){
         if(node == null){
@@ -176,6 +199,11 @@ public class AVLTree {
         root = insertNode(root,baseData, storedData,value);
     }
 
+    /**
+     * @param node
+     * Finds the minimum node in a tree.
+     * @return
+     */
     //Minimum node
     public static BinaryNode minimumNode(BinaryNode node){
         if(node.left==null){
@@ -184,6 +212,12 @@ public class AVLTree {
         return minimumNode(node.left);
     }
 
+    /**
+     * @param node
+     * @param baseData
+     * Delete a key from a tree.
+     * @return
+     */
     //Delete node
     public BinaryNode deleteNode(BinaryNode node, long baseData){
 
@@ -240,58 +274,5 @@ public class AVLTree {
 
     public void delete(long baseData){
         root = deleteNode(root,baseData);
-//        System.out.println(root.value+"z");
     }
-
-//    void levelOrder()
-//    {
-//        Queue<BinaryNode> queue = new LinkedList<BinaryNode>();
-//        queue.add(root);
-//        while(!queue.isEmpty()){
-//            BinaryNode presentNode = queue.remove();
-//
-//            if (presentNode.value == -1) {
-//                System.out.println("");
-//            } else {
-//                System.out.print(presentNode.value+" ");
-//            }
-//
-//
-//            if (presentNode.right!=null || presentNode.left!=null) {
-//                BinaryNode levelEnd = new BinaryNode();
-//                levelEnd.value = -1;
-//                queue.add(levelEnd);
-//                if(presentNode.left!=null){
-//                    queue.add(presentNode.left);
-//                }
-//                if(presentNode.right!=null){
-//                    queue.add(presentNode.right);
-//                }
-//            }
-//        }
-//    }
-
-//    public long delete__(BinaryNode node, long baseData){
-//        long x = search(node, baseData);
-//        return x;
-//    }
-
-    public static void main(String[] args) {
-        AVLTree tree = new AVLTree();
-        tree.insert(110, 210, "a");
-        tree.insert(111, 210, "b");
-        tree.insert(112, 210, "c");
-        tree.insert(113, 210, "d");
-
-//        tree.inorder(tree.root);
-//        System.out.println();
-//        System.out.println(tree.search(tree.root, 110));
-//
-//        tree.delete(110);
-//
-//        tree.inorder(tree.root);
-//        System.out.println(tree.delete__(tree.root, 110));
-
-    }
-
 }

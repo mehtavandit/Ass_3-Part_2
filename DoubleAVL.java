@@ -7,12 +7,20 @@ public class DoubleAVL {
     AVLTree creationOrder_tree;
     AVLTree key_tree;
 
+    /**
+     * Intializes two objects of Class AVLTree
+     */
     DoubleAVL() {
 //      hTable = new HashTable();
       creationOrder_tree = new AVLTree();
       key_tree = new AVLTree();
     }
 
+    /**
+     * @param key
+     * @param value
+     * Inserts the key and value in both the trees.
+     */
     public void insert(long key, String value){
         if((key_tree.search(key_tree.root, key)==null)){
 
@@ -30,6 +38,10 @@ public class DoubleAVL {
 
     }
 
+    /**
+     * @param key
+     * Deletes the particular key and value from both the trees.
+     */
     public void delete(long key){
         try{
             long x = key_tree.search(key_tree.root, key).storedData;
@@ -43,6 +55,10 @@ public class DoubleAVL {
 
     }
 
+    /**
+     * @param key
+     * Prints the value associated with a given key.
+     */
     public void get_value(long key){
         AVLTree.BinaryNode node = key_tree.search(key_tree.root,key);
         if(node != null){
@@ -55,6 +71,9 @@ public class DoubleAVL {
 
     }
 
+    /**
+     * Prints the inorder traversal.
+     */
     public void preorder(){
 //        creationOrder_tree.inorder(creationOrder_tree.root);
 //        System.out.println("\n");
@@ -63,16 +82,10 @@ public class DoubleAVL {
 
     }
 
-    public void allKeys(){
-        key_tree.inorder(key_tree.root);
-        System.out.println();
-        creationOrder_tree.inorder(creationOrder_tree.root);
-    }
-
-    public void print_keys(){
-        creationOrder_tree.inorder(creationOrder_tree.root);
-    }
-
+    /**
+     * @param key
+     * Gives the previous key present in chronological order.
+     */
     public void predecessor(long key) {
         try{
             long x = key_tree.search(key_tree.root, key).storedData; //creation order;
@@ -92,6 +105,11 @@ public class DoubleAVL {
 
     }
 
+    /**
+     * @param key1
+     * @param key2
+     * Gives the number of keys present between key1 and key2.
+     */
     public void range(long key1, long key2){
         long counter = key_tree.range_keys(key_tree.root,key1, key2);
         if(counter == 0){
@@ -103,6 +121,10 @@ public class DoubleAVL {
 
     }
 
+    /**
+     * @param key
+     * Gives the next key present in chronological order.
+     */
     public void successor(long key){
         try{
             long x = key_tree.search(key_tree.root, key).storedData; //creation order

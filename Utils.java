@@ -8,6 +8,11 @@ import static java.lang.Long.parseLong;
 public class Utils {
 
 
+    /**
+     * @param path
+     * Can be used to test the implementation of ElasticERL.
+     * @return
+     */
     public static Long[] getArrayFromFile(String path) {
         ArrayList array = new ArrayList<Long>();
 

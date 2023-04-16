@@ -8,6 +8,10 @@ class ElasticERL {
     ExpandableArray exArray = null;
     DoubleAVL doubleAVL = null;
 
+    /**
+     * @param threshold
+     * Sets the maximum size of the data structure.
+     */
     public void SetEINThreshold (long threshold) {
         this.threshold = threshold;
         if(threshold<=1000)
@@ -16,11 +20,18 @@ class ElasticERL {
             doubleAVL = new DoubleAVL();
     }
 
+    /**
+     * Generates a 8 digit EIN key.
+     * @return
+     */
     public long generate() {
 
         return newKey++;
     }
 
+    /**
+     * return all keys in sorted order.
+     */
     public void allKeys() {
          if(threshold<=1000)
             exArray.getSortedKeys();
@@ -28,6 +39,11 @@ class ElasticERL {
              doubleAVL.preorder();
     }
 
+    /**
+     * @param key
+     * @param value
+     * Inserts the key passed as an argument and a value.
+     */
     // Add with generated key
     public void add(long key, String value) {
         if(elements_inserted<threshold){
@@ -44,6 +60,10 @@ class ElasticERL {
 
     }
 
+    /**
+     * @param value
+     * Generates the key using generate() method, and inserts the key and a value.
+     */
     // Add with user-specified key
     public void add(String value) {
         if(elements_inserted<threshold){
@@ -59,6 +79,10 @@ class ElasticERL {
         }
     }
 
+    /**
+     * @param key
+     * Deletes the key, and the value associated with it.
+     */
     public void remove(long key) {
         if(threshold<=1000)
             exArray.delete(key);
@@ -66,6 +90,10 @@ class ElasticERL {
             doubleAVL.delete(key);
     }
 
+    /**
+     * @param key
+     * Gives the values associated with a particular key.
+     */
     public void getValues(long key) {
          if(threshold<=1000)
             exArray.getValue(key);
@@ -73,6 +101,10 @@ class ElasticERL {
              doubleAVL.get_value(key);
     }
 
+    /**
+     * @param key
+     * Gives the next key present in chronological order.
+     */
     public void nextKey(long key) {
         if(threshold<=1000)
            exArray.successor(key);
@@ -80,6 +112,10 @@ class ElasticERL {
             doubleAVL.successor(key);
     }
 
+    /**
+     * @param key
+     * Gives the previous key present in chronological order.
+     */
     public void prevKey(long key) {
         if(threshold<=1000)
             exArray.predecessor(key);
@@ -87,6 +123,11 @@ class ElasticERL {
              doubleAVL.predecessor(key);
     }
 
+    /**
+     * @param key1
+     * @param key2
+     * Gives the number of keys present between key1 and key2.
+     */
     public void rangeKey(long key1, long key2) {
         if(threshold<=1000)
             exArray.range(key1, key2);

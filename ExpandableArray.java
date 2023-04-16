@@ -12,14 +12,26 @@ public class ExpandableArray {
     private Node[] arr;
     int top = 0;
 
+    /**
+     * Initializes an array of size 10.
+     */
     ExpandableArray () {
         arr = new Node[10];
     }
 
+    /**
+     * @param initialSize
+     * Intializes an array of given size.
+     */
     ExpandableArray (int initialSize) {
         arr = new Node[initialSize];
     }
 
+    /**
+     * @param key
+     * @param value
+     * Insert a key into the array.
+     */
     public void insert(long key, String value) {
         if (top == arr.length)
             expand();
@@ -32,6 +44,10 @@ public class ExpandableArray {
         }
     }
 
+    /**
+     * @param key
+     * Prints the value associated with a given key.
+     */
     public void getValue(long key) {
         for (int i=0; i<top; i++) {
             if (arr[i].key == key) {
@@ -43,6 +59,11 @@ public class ExpandableArray {
         System.out.println("No such key exists, value not found");
     }
 
+    /**
+     * @param key
+     * Gives the index (creation order) of the particular key.
+     * @return
+     */
     private int getIndex(long key) {
         for (int i=0; i<top; i++) {
             if (arr[i].key == key) {
@@ -53,6 +74,10 @@ public class ExpandableArray {
         return -1;
     }
 
+    /**
+     * @param key
+     * Gives the previous key present in chronological order.
+     */
     public void predecessor(long key) {
         int index=getIndex(key);
 
@@ -62,6 +87,10 @@ public class ExpandableArray {
         else System.out.println("No such key exists");
     }
 
+    /**
+     * @param key
+     * Gives the next key present in chronological order.
+     */
     public void successor(long key) {
         int index=getIndex(key);
 
@@ -75,12 +104,23 @@ public class ExpandableArray {
         return top;
     }
 
+    /**
+     * Creates an array of double the existing size, and copies all elements into it.
+     */
     private void expand() {
         Node[] temp = new Node[Math.min(1000, 2*arr.length)];
         System.arraycopy(arr, 0, temp, 0, arr.length);
         arr = temp;
     }
 
+    /**
+     * @param keys
+     * @param l
+     * @param m
+     * @param r
+     * Performs the merge sort.
+     * @return
+     */
     private long[] merge(long[] keys, int l, int m, int r) {
         int n1 = m - l + 1;
         int n2 = r - m;
@@ -122,6 +162,13 @@ public class ExpandableArray {
         return keys;
     }
 
+    /**
+     * @param keys
+     * @param l
+     * @param r
+     * returns all keys in sorted order.
+     * @return
+     */
     private long[] sortKeys(long keys[], int l, int r) {
         if (l < r) {
             int m = l + (r - l) / 2;
@@ -133,6 +180,9 @@ public class ExpandableArray {
         return keys;
     }
 
+    /**
+     * Prints all keys in sorted order.
+     */
     public void getSortedKeys() {
         long[] keys = new long[top];
         for (int i = 0; i < top; i++) {
@@ -146,6 +196,10 @@ public class ExpandableArray {
         System.out.println("");
     }
 
+    /**
+     * @param key
+     * Deletes the key, and the value associated with it.
+     */
     public void delete(long key) {
         int index = getIndex(key);
 
@@ -159,6 +213,11 @@ public class ExpandableArray {
         }
     }
 
+    /**
+     * @param key1
+     * @param key2
+     * Gives the number of keys present between key1 and key2.
+     */
     public void range(long key1, long key2) {
         int counter = 0;
 
